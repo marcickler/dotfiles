@@ -78,7 +78,6 @@ plugins=(
   extract
   zsh-autosuggestions
   command-not-found
-  conda-zsh-completion
 )
 
 source $ZSH/oh-my-zsh.sh
