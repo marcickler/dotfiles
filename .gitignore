@@ -1,6 +1,7 @@
 *
 
 !/.gitignore
+!/README.md
 !/.zshrc
 !/.p10k.zsh
 !/.powerlevel10k/
