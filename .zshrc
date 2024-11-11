@@ -115,7 +115,7 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -f ~/.conda_init ] && source ~/.conda_init
-[ -f ~/.env_vars] && source ~/.env_vars
+[ -f ~/.env_vars ] && source ~/.env_vars
 
 alias helix='ssh hd_ru233@helix.bwservices.uni-heidelberg.de'
 alias bwuni='ssh hd_ru233@bwunicluster.scc.kit.edu'
