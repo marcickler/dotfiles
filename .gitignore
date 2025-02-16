@@ -2,8 +2,13 @@
 
 !/README.md
 !/.gitignore
+
 !/.gitmodules
 !/.oh-my-zsh
 !/.powerlevel10k
-!/.p10k.zsh
+!/.zsh_custom
+!/.zsh_custom/**
+
 !/.zshrc
+!/.zshrc_tracked
+!/.p10k.zsh
