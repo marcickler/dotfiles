@@ -9,5 +9,6 @@
 !/.zsh_custom
 !/.zsh_custom/**
 
+!/.zshrc
 !/.zshrc_tracked
 !/.p10k.zsh
