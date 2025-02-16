@@ -10,5 +10,5 @@
 !/.zsh_custom/**
 
 !/.zshrc
-!/.zshrc_tracked
+!/.zshrc_global
 !/.p10k.zsh
