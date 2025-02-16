@@ -6,6 +6,7 @@
 !/.gitmodules
 !/.oh-my-zsh
 !/.powerlevel10k
+!/.fzf
 !/.zsh_custom
 !/.zsh_custom/**
 
