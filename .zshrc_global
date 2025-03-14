@@ -48,3 +48,7 @@ esac
 if command -v uv >/dev/null 2>&1; then
  eval "$(uv generate-shell-completion zsh)" &>/dev/null
 fi
+
+alias act='source .venv/bin/activate'
+alias cddata='cd $DFT_DATA'
+alias cdmodel='cd $DFT_MODELS'
