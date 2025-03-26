@@ -7,38 +7,24 @@ end
 -- Basic configuration
 -- config.font_size = 20
 -- config.default_prog = { "/usr/bin/fish" }
-config.use_fancy_tab_bar = false  -- Enable fancy tab bar
+config.use_fancy_tab_bar = true  -- Enable fancy tab bar
 config.hide_tab_bar_if_only_one_tab = true  -- Hide tab bar if only one tab
-config.enable_scroll_bar = true  -- Enable scroll bar
 
 config.default_cursor_style = 'SteadyBar'
--- config.window_decorations = "NONE"
+-- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 -- config.integrated_title_button_style = "Gnome"
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.85
+config.cursor_thickness = 2
+config.initial_cols = 140
+config.initial_rows = 32
 
--- Define light-mode tab bar colors (used as defaults)
-config.colors = config.colors or {}
-
-
--- Define the default window frame settings.
-config.window_frame = {
-  font = wezterm.font { family = 'Roboto', weight = 'Bold' },
-  font_size = 15.0,
-  active_titlebar_bg = '#333333',
-  inactive_titlebar_bg = '#333333',
-}
-
--- Register color schemes
-config.color_schemes = {
-  ['My CLRS'] = wezterm.color.get_builtin_schemes()['CLRS'],
-}
 
 -- Function to choose a color scheme based on appearance.
 function scheme_for_appearance(appearance)
   if appearance:find 'Dark' then
     return 'Wez'  -- Dark theme
   else
-    return 'My CLRS'  -- Our custom light scheme
+    return 'CLRS'  -- Our custom light scheme
   end
 end
 
@@ -49,9 +35,6 @@ local light_tab_bar = {
     bg_color = '#FFFFFF',
     fg_color = '#333333',
     intensity = 'Normal',
-    underline = 'None',
-    italic = false,
-    strikethrough = false,
   },
   inactive_tab = {
     bg_color = '#E0E0E0',
@@ -60,16 +43,14 @@ local light_tab_bar = {
   inactive_tab_hover = {
     bg_color = '#D3D3D3',
     fg_color = '#555555',
-    italic = true,
   },
   new_tab = {
-    bg_color = '#E0E0E0',
+    bg_color = '#F5F5F5',
     fg_color = '#666666',
   },
   new_tab_hover = {
     bg_color = '#D3D3D3',
     fg_color = '#555555',
-    italic = true,
   },
 }
 
@@ -80,8 +61,6 @@ local dark_tab_bar = {
     fg_color = '#FFFFFF',  -- White text for contrast
     intensity = 'Normal',
     underline = 'None',
-    italic = false,
-    strikethrough = false,
   },
   inactive_tab = {
     bg_color = '#2d2d2d',  -- Slightly lighter than the background
@@ -90,16 +69,14 @@ local dark_tab_bar = {
   inactive_tab_hover = {
     bg_color = '#3d3d3d',
     fg_color = '#CCCCCC',
-    italic = true,
   },
   new_tab = {
-    bg_color = '#2d2d2d',
+    bg_color = '#333333',
     fg_color = '#AAAAAA',
   },
   new_tab_hover = {
     bg_color = '#3d3d3d',
     fg_color = '#CCCCCC',
-    italic = true,
   },
 }
 
@@ -111,22 +88,24 @@ wezterm.on('window-config-reloaded', function(window, pane)
 
   -- Set the color scheme override
   overrides.color_scheme = scheme
+  overrides.colors = overrides.colors or {}
+  overrides.colors = {
+    cursor_bg = '#ff913f',
+    cursor_border = '#d36f25',
+  }
 
   -- Dynamically update window frame and tab bar colors.
   -- Also include font settings for the window frame.
   if appearance:find 'Dark' then
     overrides.window_frame = {
-      font = wezterm.font { family = 'Roboto', weight = 'Bold' },
-      font_size = 15.0,
+      font = wezterm.font { family = 'Roboto', weight = 'Bold'},
       active_titlebar_bg = '#333333',
       inactive_titlebar_bg = '#333333',
     }
-    overrides.colors = overrides.colors or {}
     overrides.colors.tab_bar = dark_tab_bar
   else
     overrides.window_frame = {
-      font = wezterm.font { family = 'Roboto', weight = 'Bold' },
-      font_size = 15.0,
+      font = wezterm.font { family = 'Roboto', weight = 'Bold'},
       active_titlebar_bg = '#F5F5F5',
       inactive_titlebar_bg = '#F5F5F5',
     }
@@ -136,6 +115,9 @@ wezterm.on('window-config-reloaded', function(window, pane)
 
   window:set_config_overrides(overrides)
 end)
+
+
+-- KEY BINDINGS --
 
 -- Key bindings for tab management
 local act = wezterm.action
