@@ -13,6 +13,7 @@
 !/.tmux.conf.local
 !/.tmux.conf
 
+!/.vimrc
 !/.zshrc
 !/.zshrc_global
 !/.p10k.zsh
