@@ -7,3 +7,5 @@ source ~/.zshrc_global
 # source local zsh configuration if it exists
 [ -f ~/.zshrc_local ] && source ~/.zshrc_local
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
