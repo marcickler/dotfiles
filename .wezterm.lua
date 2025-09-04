@@ -5,7 +5,7 @@ if wezterm.config_builder then
 end
 
 -- Basic configuration
-config.font_size = 20
+config.font_size = 16
 -- config.default_prog = { "/usr/bin/fish" }
 config.use_fancy_tab_bar = true  -- Enable fancy tab bar
 config.hide_tab_bar_if_only_one_tab = true  -- Hide tab bar if only one tab
