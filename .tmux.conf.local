@@ -4,18 +4,6 @@
 #         without any warranty.
 #         Copyright 2012— Gregory Pakosz (@gpakosz).
 
-# Detect if this tmux session is nested
-if-shell '[ -n "$TMUX" ]' \
-  "set-option -g prefix C-b; unbind C-a" \
-  "set-option -g prefix C-a; unbind C-b"
-
-# Ensure both prefixes can reload configuration easily
-bind r source-file ~/.tmux.conf \; display "Reloaded ~/.tmux.conf"
-
-# Optional: let you toggle between prefixes manually
-bind-key -T prefix C-t if -F '#{==:#{prefix},C-a}' \
-  'set-option -g prefix C-b \; display "Switched prefix to C-b"' \
-  'set-option -g prefix C-a \; display "Switched prefix to C-a"'
 
 
 # -- bindings ------------------------------------------------------------------
@@ -411,6 +399,24 @@ set -g mouse on
 
 # move status line to top
 #set -g status-position top
+
+run-shell -b '
+  if [ -n "$SSH_TTY" ]; then
+    tmux set -gu prefix2
+    tmux unbind C-a
+    tmux unbind C-b
+    tmux set -g prefix C-b
+    tmux bind-key C-b send-prefix
+    tmux display-message -d 5000 -N "tmux.conf.local: SSH detected → prefix C-b"
+  else
+    tmux set -gu prefix2
+    tmux unbind C-b
+    tmux unbind C-a
+    tmux set -g prefix C-a
+    tmux bind-key C-a send-prefix
+    tmux display-message -d 5000 -N "tmux.conf.local: local → prefix C-a"
+  fi
+'
 
 
 # -- tpm -----------------------------------------------------------------------
