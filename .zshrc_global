@@ -5,6 +5,23 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Cluster module init scripts may export FPATH (and thus set $fpath) to a minimal
+# directory like /usr/share/Modules/init/zsh-functions, which hides standard Zsh
+# autoloaded functions (compinit, add-zsh-hook, colors, is-at-least, ...).
+# Oh My Zsh depends on those functions, so ensure the standard function
+# directories are present for interactive shells.
+if [[ -o interactive ]]; then
+  typeset -U fpath
+  for _zfuncdir in \
+    /usr/local/share/zsh/site-functions \
+    /usr/share/zsh/site-functions \
+    "/usr/share/zsh/${ZSH_VERSION}/functions"
+  do
+    [[ -d "${_zfuncdir}" ]] && fpath=("${_zfuncdir}" $fpath)
+  done
+  unset _zfuncdir
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
