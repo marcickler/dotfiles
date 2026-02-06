@@ -400,23 +400,15 @@ set -g mouse on
 # move status line to top
 #set -g status-position top
 
-run-shell -b '
-  if [ -n "$SSH_TTY" ]; then
-    tmux set -gu prefix2
-    tmux unbind C-a
-    tmux unbind C-b
-    tmux set -g prefix C-b
-    tmux bind-key C-b send-prefix
-    tmux display-message -d 5000 -N "tmux.conf.local: SSH detected → prefix C-b"
-  else
-    tmux set -gu prefix2
-    tmux unbind C-b
-    tmux unbind C-a
-    tmux set -g prefix C-a
-    tmux bind-key C-a send-prefix
-    tmux display-message -d 5000 -N "tmux.conf.local: local → prefix C-a"
-  fi
-'
+# Always use both prefixes (no SSH-dependent switching)
+set -g prefix C-a
+set -g prefix2 C-b
+unbind-key C-a
+unbind-key C-b
+
+# Press prefix twice to send the literal key through (useful for nested tmux)
+bind-key C-a send-prefix
+bind-key C-b send-prefix
 
 
 # -- tpm -----------------------------------------------------------------------
