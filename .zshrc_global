@@ -74,4 +74,4 @@ alias cddata='cd $DFT_DATA'
 alias cdmodel='cd $DFT_MODELS'
 
 # rsync recursive, verbose, human-readable, compressed, progress bar
-alias rsynk='rsync -rvhz --info=progress2 --info=name0'
+alias rsynk='rsync -avhz --info=progress2 --info=name0'
