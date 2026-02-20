@@ -1,0 +1,18 @@
+# Shared shell functions for Bash and Zsh.
+# Keep this file portable across both shells.
+
+# Count regular files and directories under a path (recursive, fast one-pass walk).
+ct() {
+    ct_dir="${1:-.}"
+    if [ ! -d "$ct_dir" ]; then
+        printf 'ct: not a directory: %s\n' "$ct_dir" >&2
+        return 1
+    fi
+
+    find "$ct_dir" -mindepth 1 -printf '%y\n' 2>/dev/null | awk '
+        BEGIN { files = 0; dirs = 0 }
+        $1 == "f" { files++ }
+        $1 == "d" { dirs++ }
+        END { printf "files=%d dirs=%d total=%d\n", files, dirs, files + dirs }
+    '
+}

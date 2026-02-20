@@ -18,5 +18,6 @@
 !/.zshrc_global
 !/.p10k.zsh
 !/.profile
+!/.shell_functions
 !/.pyscf_conf.py
 !/.wezterm.lua
