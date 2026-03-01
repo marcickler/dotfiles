@@ -3,6 +3,15 @@
 !/README.md
 !/.gitignore
 
+!/.config/
+
+# 2. Re-ignore everything inside .config by default (optional, if you want to keep it clean)
+/.config/*
+
+# 3. Whitelist the nvim directory and everything inside it
+!/.config/nvim/
+!/.config/nvim/**
+
 !/.gitmodules
 !/.oh-my-zsh
 !/.powerlevel10k
