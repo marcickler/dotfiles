@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -257,7 +257,27 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
+  { 'projekt0n/github-nvim-theme', name = 'github-theme', priority = 1000 },
+  { 'sindrets/diffview.nvim' },
+  {
+    'supermaven-inc/supermaven-nvim',
+    config = function()
+      -- 1. Setup normally to avoid the nvim-cmp warning
+      require('supermaven-nvim').setup {
+        keymaps = {
+          accept_suggestion = '<C-f>',
+          clear_suggestion = '<C-]>',
+          accept_word = '<C-j>',
+        },
+      }
 
+      -- 2. Turn the AI off immediately after Neovim finishes loading
+      vim.defer_fn(function() vim.cmd 'SupermavenStop' end, 100)
+
+      -- 3. Map Ctrl+s to toggle it on and off
+      vim.keymap.set('i', '<C-s>', function() vim.cmd 'SupermavenToggle' end, { desc = 'Toggle Supermaven' })
+    end,
+  },
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
   --    {
@@ -954,3 +974,28 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- 1. Define your preferred themes here
+local dark_theme = 'habamax'
+local light_theme = 'github_light'
+local function sync_theme_with_terminal()
+  if vim.o.background == 'light' then
+    vim.cmd.colorscheme(light_theme)
+  else
+    vim.cmd.colorscheme(dark_theme)
+  end
+end
+
+-- 3. Listen for Wezterm telling Neovim that the background changed
+vim.api.nvim_create_autocmd('OptionSet', {
+  pattern = 'background',
+  callback = sync_theme_with_terminal,
+})
+
+-- 4. Delay the first check until the UI is fully attached and WezTerm has time to reply over SSH
+vim.api.nvim_create_autocmd('UIEnter', {
+  callback = function()
+    -- Small delay to let the terminal response arrive
+    vim.defer_fn(sync_theme_with_terminal, 20)
+  end,
+})
