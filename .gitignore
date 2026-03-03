@@ -11,6 +11,7 @@
 # 3. Whitelist the nvim directory and everything inside it
 !/.config/nvim/
 !/.config/nvim/**
+/.config/nvim/lazy-lock.json
 
 !/.gitmodules
 !/.oh-my-zsh
