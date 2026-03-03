@@ -5,6 +5,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Refresh the SSH agent socket in new tmux shells.
+if [[ -n "${TMUX-}" ]] && (( $+commands[tmux] )); then
+  _tmux_ssh_auth_sock="$(tmux show-environment -g SSH_AUTH_SOCK 2>/dev/null)"
+  _tmux_ssh_auth_sock="${_tmux_ssh_auth_sock#SSH_AUTH_SOCK=}"
+  [[ -S "${_tmux_ssh_auth_sock}" ]] && export SSH_AUTH_SOCK="${_tmux_ssh_auth_sock}"
+  unset _tmux_ssh_auth_sock
+fi
+
 # Cluster module init scripts may export FPATH (and thus set $fpath) to a minimal
 # directory like /usr/share/Modules/init/zsh-functions, which hides standard Zsh
 # autoloaded functions (compinit, add-zsh-hook, colors, is-at-least, ...).
