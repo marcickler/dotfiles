@@ -260,22 +260,20 @@ require('lazy').setup({
   { 'projekt0n/github-nvim-theme', name = 'github-theme', priority = 1000 },
   { 'sindrets/diffview.nvim' },
   {
-    'supermaven-inc/supermaven-nvim',
+    'nvim-treesitter/nvim-treesitter-context',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
-      -- 1. Setup normally to avoid the nvim-cmp warning
-      require('supermaven-nvim').setup {
-        keymaps = {
-          accept_suggestion = '<C-f>',
-          clear_suggestion = '<C-]>',
-          accept_word = '<C-j>',
-        },
-      }
-
-      -- 2. Turn the AI off immediately after Neovim finishes loading
-      vim.defer_fn(function() vim.cmd 'SupermavenStop' end, 100)
-
-      -- 3. Map Ctrl+s to toggle it on and off
-      vim.keymap.set('i', '<C-s>', function() vim.cmd 'SupermavenToggle' end, { desc = 'Toggle Supermaven' })
+      require('treesitter-context').setup({
+        enable = true, -- Enable this plugin
+        max_lines = 3, -- Limit the sticky header to 3 lines so it doesn't take up your whole screen if you have deeply nested loops!
+        min_window_height = 0,
+        line_numbers = true,
+        multiline_threshold = 20,
+        trim_scope = 'outer',
+        mode = 'cursor', -- Calculates the context based on where your cursor is
+        separator = '-', -- Puts a subtle little line under the sticky context to separate it from your code
+        zindex = 20,
+      })
     end,
   },
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
@@ -898,7 +896,7 @@ require('lazy').setup({
     branch = 'main',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'python', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
@@ -998,4 +996,10 @@ vim.api.nvim_create_autocmd('UIEnter', {
     -- Small delay to let the terminal response arrive
     vim.defer_fn(sync_theme_with_terminal, 20)
   end,
+})
+
+-- Automatically save the file when you leave the buffer or Neovim loses focus
+vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
+  pattern = '*',
+  command = 'silent! update',
 })
