@@ -31,3 +31,7 @@
 !/.shell_functions
 !/.pyscf_conf.py
 !/.wezterm.lua
+
+!/.codex/
+/.codex/*
+!/.codex/AGENTS.md
