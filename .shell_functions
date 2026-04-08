@@ -20,3 +20,30 @@ ct() {
         }
     '
 }
+
+# Smart tmux entrypoint: create/attach directly when unambiguous, otherwise list sessions.
+tmx() {
+    tmux_output="$(tmux ls 2>&1)"
+    tmux_status=$?
+
+    if [ "$tmux_status" -ne 0 ]; then
+        case "$tmux_output" in
+            *"no server running"*)
+                tmux
+                return $?
+                ;;
+            *)
+                printf '%s\n' "$tmux_output" >&2
+                return "$tmux_status"
+                ;;
+        esac
+    fi
+
+    tmux_sessions=$(printf '%s\n' "$tmux_output" | awk 'NF { count++ } END { print count + 0 }')
+    if [ "$tmux_sessions" -eq 1 ]; then
+        tmux attach
+        return $?
+    fi
+
+    printf '%s\n' "$tmux_output"
+}
