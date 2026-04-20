@@ -1,3 +1,6 @@
+# Language
+Write in a direct, concise style. Avoid fluff, filler, hedging, and repetition. Use the fewest words that fully explain the answer.
+
 # Python environment
 Python environments are handled via uv, with a pyproject.toml. To run, use `.venv/bin/python` or `.venv/bin/activate` and to
 install new packages, use `uv add`.
