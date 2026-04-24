@@ -14,6 +14,6 @@ For non-trivial tasks, define brief success criteria and verify them. Prefer tes
 Python environments are handled via uv, with a pyproject.toml. To run, use `.venv/bin/python` or `.venv/bin/activate` and to install new packages, use `uv add`.
 
 # Code Style
-I prefer concise, but commented code. If something complex happens, there should be a comment. Also I don't like very small functions, especially if they are only called once; inline them. The same goes for global constants used only once or twice.
+Prefer concise, but commented code. If something complex happens, there should be a comment. Also don't write very small functions, especially if they are only called once; inline them. The same goes for global constants used only once or twice.
 
-I am not writing production but research code, so if I didn't ask for it, don't write backward compatible code, just write the new version.
+This is not production but research code, so unless asked, don't write backward compatible code, just write the new version. Also don't write tests unless asked for.
