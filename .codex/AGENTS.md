@@ -1,19 +1,33 @@
 # Language
-Write in a direct, concise style. Avoid fluff, filler, hedging, and repetition. Use the fewest words that fully explain the answer.
+Write directly and concisely. Avoid filler, repetition, and unnecessary hedging.
 
-# Work style
-Think before coding. State assumptions, surface tradeoffs, and ask when the request is genuinely ambiguous. If a simpler approach exists, say so.
+# Workflow
+Before coding, identify assumptions and the minimal viable change. Mention tradeoffs only when relevant. Ask questions only if ambiguity blocks implementation.
 
-Prefer the smallest change that solves the task. Do not add speculative features, abstractions, configurability, or compatibility code unless asked.
+Prefer the smallest change that fully solves the task. Do not add speculative features, abstractions, configurability, or compatibility code unless requested.
 
-Make surgical edits. Touch only what the request requires, match the existing style, and do not clean up unrelated code. Remove only unused imports, variables, or functions created by your own changes.
+Make surgical edits. Touch only code required for the task. Match existing style. Do not refactor unrelated code.
 
-For non-trivial tasks, define brief success criteria and verify them. Prefer tests or reproducible checks; if you cannot verify, say why.
+Remove only unused code introduced by your changes.
 
-# Python environment
-Python environments are handled via uv, with a pyproject.toml. To run, use `.venv/bin/python` or `.venv/bin/activate` and to install new packages, use `uv add`.
+Verify only the behavior affected by your changes. Prefer fast, reproducible checks. If verification is not possible, say why.
+
+# Python
+Python environments use `uv` with `pyproject.toml`.
+
+Run Python with:
+- `.venv/bin/python`
+- or `.venv/bin/activate`
+
+Install packages with:
+- `uv add`
 
 # Code Style
-Prefer concise, but commented code. If something complex happens, there should be a comment. Also don't write very small functions, especially if they are only called once; inline them. The same goes for global constants used only once or twice.
+Prefer concise code. Add comments only where intent or logic is non-obvious.
 
-This is not production but research code, so unless asked, don't write backward compatible code, just write the new version. Also don't write tests unless asked for.
+Avoid tiny single-use functions or one-off abstractions. Inline simple logic unless reuse materially improves clarity.
+
+This is research code, not production infrastructure. Unless requested:
+- do not add backward compatibility layers
+- do not introduce defensive abstractions
+- do not write tests
