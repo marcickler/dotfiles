@@ -35,3 +35,8 @@
 !/.codex/
 /.codex/*
 !/.codex/AGENTS.md
+
+
+!/.claude/
+/.claude/*
+!/.claude/CLAUDE.md
