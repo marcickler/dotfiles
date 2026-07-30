@@ -12,6 +12,10 @@ Remove only unused code introduced by your changes.
 
 Verify only the behavior affected by your changes. Prefer fast, reproducible checks. If verification is not possible, say why.
 
+When optimizing performance, reason from the system's physical limits, such as achievable CPU or GPU utilization, memory bandwidth, and filesystem throughput. Do not accept a solution as optimal without checking it against those limits.
+
+Run processes expected to take multiple hours—such as neural network training, validations, or denops—in a named `tmux` session so they continue independently and can be inspected by attaching to the session and viewing their output. Shorter processes do not need to run in tmux.
+
 # Python
 Python environments use `uv` with `pyproject.toml`.
 
