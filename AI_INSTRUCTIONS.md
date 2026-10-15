@@ -1,6 +1,10 @@
 # Language
 Write directly and concisely. Avoid filler, repetition, and unnecessary hedging.
 
+# Host-local instructions
+Before starting longer resource heavy jobs, read `~/CLUSTER_INSTRUCTIONS.md` if it exists. It contains
+host-specific requirements.
+
 # Workflow
 Before coding, identify assumptions and the minimal viable change. Mention tradeoffs only when relevant. Ask questions only if ambiguity blocks implementation.
 
